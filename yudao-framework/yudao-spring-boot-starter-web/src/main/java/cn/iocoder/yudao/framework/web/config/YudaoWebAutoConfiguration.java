@@ -23,14 +23,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
-import javax.servlet.Filter;
 
 @AutoConfiguration
 @EnableConfigurationProperties(WebProperties.class)
-public class YudaoWebAutoConfiguration implements WebMvcConfigurer {
+public class YudaoWebAutoConfiguration implements AbstractWebMvcConfiguration {
 
     @Resource
     private WebProperties webProperties;
@@ -110,12 +108,6 @@ public class YudaoWebAutoConfiguration implements WebMvcConfigurer {
     @ConditionalOnProperty(value = "yudao.demo", havingValue = "true")
     public FilterRegistrationBean<DemoFilter> demoFilter() {
         return createFilterBean(new DemoFilter(), WebFilterOrderEnum.DEMO_FILTER);
-    }
-
-    public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
-        FilterRegistrationBean<T> bean = new FilterRegistrationBean<>(filter);
-        bean.setOrder(order);
-        return bean;
     }
 
     /**

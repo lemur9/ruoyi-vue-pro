@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.framework.xss.config;
 
 import cn.iocoder.yudao.framework.common.enums.WebFilterOrderEnum;
+import cn.iocoder.yudao.framework.web.config.AbstractWebMvcConfiguration;
 import cn.iocoder.yudao.framework.xss.core.clean.JsoupXssCleaner;
 import cn.iocoder.yudao.framework.xss.core.clean.XssCleaner;
 import cn.iocoder.yudao.framework.xss.core.filter.XssFilter;
@@ -15,14 +16,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.PathMatcher;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import static cn.iocoder.yudao.framework.web.config.YudaoWebAutoConfiguration.createFilterBean;
 
 @AutoConfiguration
 @EnableConfigurationProperties(XssProperties.class)
 @ConditionalOnProperty(prefix = "yudao.xss", name = "enable", havingValue = "true", matchIfMissing = true) // 设置为 false 时，禁用
-public class YudaoXssAutoConfiguration implements WebMvcConfigurer {
+public class YudaoXssAutoConfiguration implements AbstractWebMvcConfiguration {
 
     /**
      * Xss 清理者
